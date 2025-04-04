@@ -4,14 +4,21 @@ spring:
       on-profile: dev
   devtools:
     add-properties: true
+  datasource:
+    url: jdbc:postgresql://localhost:5439/postgres
+    username: namtrieu
+    password: password
+    hikari:
+      connection-init-sql: CREATE SCHEMA IF NOT EXISTS backend_service;
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
-    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: backend_service
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
 
 springdoc:
   api-docs:
