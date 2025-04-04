@@ -2,8 +2,10 @@ package com.namjava.controller.request;
 
 
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class UserPasswordRequest {
 
     private Long id;

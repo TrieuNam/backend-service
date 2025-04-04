@@ -3,12 +3,14 @@ package com.namjava.controller.request;
 import com.namjava.common.Gender;
 import com.namjava.common.UserType;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Getter
+@ToString
 public class UserCreationRequest implements Serializable {
 
     private String firstName;

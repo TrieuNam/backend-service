@@ -46,7 +46,7 @@ public class AddressEntity {
 
 
     @Column(name = "user_id")
-    private Long userID;
+    private Long userId;
 
     @Column(name = "created_at", length = 255)
     @Temporal(TemporalType.TIMESTAMP)

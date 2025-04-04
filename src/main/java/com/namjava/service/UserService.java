@@ -3,12 +3,13 @@ package com.namjava.service;
 import com.namjava.controller.request.UserCreationRequest;
 import com.namjava.controller.request.UserPasswordRequest;
 import com.namjava.controller.request.UserUpdateRequest;
+import com.namjava.controller.response.UserPageResponse;
 import com.namjava.controller.response.UserResponse;
 
 import java.util.List;
 
 public interface UserService {
-    List<UserResponse> findAll();
+    UserPageResponse findAll(String keyword, String sort, int page, int size);
 
     UserResponse findById(Long id);
 

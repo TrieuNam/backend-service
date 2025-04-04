@@ -30,9 +30,9 @@ public class UserEntity {
     @Column(name = "last_name", length = 255)
     private String lastName;
 
-    @Column(name = "gender_type", length = 255)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Enumerated(EnumType.STRING)
+    @Column(name = "gender_type")
     private Gender gender;
 
     @Column(name = "date_of_birth")
@@ -41,6 +41,10 @@ public class UserEntity {
 
     @Column(name = "user_name", unique = true, nullable = true, length = 255)
     private String userName;
+
+    @Column(name = "password", length = 255)
+    private String password;
+
 
     @Column(name = "email", length = 255)
     private String email;
