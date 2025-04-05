@@ -12,6 +12,7 @@ import com.namjava.model.AddressEntity;
 import com.namjava.model.UserEntity;
 import com.namjava.repository.AddressRepository;
 import com.namjava.repository.UserRepository;
+import com.namjava.service.EmailService;
 import com.namjava.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -43,6 +45,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncode;
+
+    @Autowired
+    private final EmailService emailService;
 
 
     @Override
@@ -175,6 +180,13 @@ public class UserServiceImpl implements UserService {
             });
             addressRepository.saveAll(addresses);
             log.info("Saved Addresses: {}", addresses);
+        }
+
+        // Send email verification
+        try {
+            emailService.sendVerificationEmail(req.getEmail(), req.getUserName());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return user.getId();
     }
