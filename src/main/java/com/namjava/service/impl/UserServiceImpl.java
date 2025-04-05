@@ -6,6 +6,7 @@ import com.namjava.controller.request.UserPasswordRequest;
 import com.namjava.controller.request.UserUpdateRequest;
 import com.namjava.controller.response.UserPageResponse;
 import com.namjava.controller.response.UserResponse;
+import com.namjava.exception.InvalidDataException;
 import com.namjava.exception.ResourceNotFoundException;
 import com.namjava.model.AddressEntity;
 import com.namjava.model.UserEntity;
@@ -137,6 +138,12 @@ public class UserServiceImpl implements UserService {
     @Transactional(rollbackFor = Exception.class)
     public Long save(UserCreationRequest req) {
         log.info("Saving user: {}", req);
+
+        UserEntity userByEmail = userRepository.findByEmail(req.getEmail());
+        if(userByEmail != null){
+            throw new InvalidDataException("Email already exists");
+        }
+
         UserEntity user = new UserEntity();
         user.setFirstName(req.getFirstName());
         user.setLastName(req.getLastName());

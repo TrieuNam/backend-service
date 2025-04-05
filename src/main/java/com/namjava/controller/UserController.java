@@ -7,6 +7,7 @@ import com.namjava.controller.response.UserResponse;
 import com.namjava.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ import java.util.Map;
 @Tag(name = "User controller API", description = "User hello api")
 @RequiredArgsConstructor
 @Slf4j
+@Validated
 public class UserController {
 
     @Autowired
@@ -48,7 +50,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     @Operation(summary = "Get user detail", description = "API get user detail from DB")
-    public Map<String, Object> getUserDetail(@PathVariable  Long userId) {
+    public Map<String, Object> getUserDetail(@PathVariable @Min(value = 1, message = "userId must be equals or greater than 1") Long userId) {
 
         log.info("Get user detail by Id: {}", userId);
         UserResponse userResponse1 = userService.findById(userId);
@@ -63,7 +65,7 @@ public class UserController {
 
     @PostMapping("/add")
     @Operation(summary = "create user ", description = "API create user to DB")
-    public ResponseEntity<Object> createUser(@RequestBody UserCreationRequest request) {
+    public ResponseEntity<Object> createUser(@RequestBody @Valid UserCreationRequest request) {
 
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("status", HttpStatus.CREATED.value());
@@ -77,7 +79,7 @@ public class UserController {
 
     @PutMapping("/update")
     @Operation(summary = "Update user ", description = "API update user to DB")
-    public Map<String, Object> updateUser(@RequestBody UserUpdateRequest request) {
+    public Map<String, Object> updateUser(@RequestBody @Valid UserUpdateRequest request) {
         log.info("Updating user: {}", request);
 
         userService.update(request);
@@ -92,7 +94,7 @@ public class UserController {
 
     @PatchMapping("/change-pwd")
     @Operation(summary = "Change password user ", description = "API Change password user to DB")
-    public Map<String, Object> changePasswordUser(@RequestBody UserPasswordRequest request) {
+    public Map<String, Object> changePasswordUser(@RequestBody @Valid UserPasswordRequest request) {
 
         log.info("Updating user: {}", request);
 
@@ -107,9 +109,9 @@ public class UserController {
     }
 
 
-    @DeleteMapping("delete/{userid}")
+    @DeleteMapping("delete/{userId}")
     @Operation(summary = "delete  user ", description = "API delete user to DB")
-    public Map<String, Object> deleteUser(@PathVariable Long userId) {
+    public Map<String, Object> deleteUser(@PathVariable @Min(value = 1, message = "userId must be equals or greater than 1") Long userId) {
 
         log.info("Deleting user: {}", userId);
 

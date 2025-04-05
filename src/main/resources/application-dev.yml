@@ -8,16 +8,13 @@ spring:
     url: jdbc:postgresql://localhost:5439/postgres
     username: namtrieu
     password: password
-    hikari:
-      connection-init-sql: CREATE SCHEMA IF NOT EXISTS backend_service;
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        default_schema: backend_service
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
 
 
 springdoc:
